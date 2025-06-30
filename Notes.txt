@@ -1,0 +1,109 @@
+======================
+🛠️ SETUP & INSTALLATION
+======================
+- Installed Flask, Feedparser using pip
+- Switched from PostgreSQL to SQLite after pg_hba.conf errors
+- Verified database schema with DB Browser for SQLite
+- Created templates folder and structured Flask app using Jinja2
+
+======================
+🐛 TROUBLESHOOTING LOG
+======================
+- Resolved NameError: 'Podcast' vs. 'podcast' table mismatch
+- Fixed Jinja2 TemplateNotFound: podcast.html
+- Cleared conflicting tables: episode vs episodes
+- Removed duplicate podcasts using SQLite DELETE queries
+- Removed Liberty University Convocation (invalid Apple feed)
+- Accidentally deleted Focus on the Family episodes; restored from RSS
+- Investigated episode count errors due to bad or missing enclosures
+- Confirmed script was using the correct selah.db with full path checks
+
+======================
+🧪 TESTING STEPS
+======================
+- Verified all podcast episode feeds imported correctly from valid RSS
+- Validated MP3 streaming and links for every episode
+- Tested safe_cleanup.py:
+  - orphaned detection
+  - backup creation
+  - CSV log output
+- Tested Flask admin tools:
+  - /admin → load admin dashboard
+  - /admin/import → re-run RSS episode import
+  - /cleanup-log → show deleted orphaned episodes
+- Confirmed episode counts via check_episode_counts.py
+
+======================
+📜 COMMAND HISTORY
+======================
+git init  
+git remote add origin https://github.com/AprilKBagwell/Selah-Podcast-Aggregator.git  
+git pull origin main --allow-unrelated-histories  
+git push --set-upstream origin main  
+python init_db.py  
+python rss_utils.py  
+python app.py  
+python safe_cleanup.py  
+python update_and_count_episodes.py  
+
+======================
+🧠 IDEAS + TO-DOs
+======================
+- Add podcast thumbnails or church logos
+- Auto-refresh RSS on app launch (or daily via cron job)
+- Export .csv backup of all podcasts and episodes
+- Add a restore feature to undo episode deletions from log
+- Build admin dashboard for managing podcast records in Flask UI
+
+======================
+✅ COMPLETED MILESTONES
+======================
+2025-06-08 18:00 - Initial episode import from all feeds
+2025-06-15 10:30 - Completed data cleanup, backup, logging, and UI viewer
+
+✅ Final Verified Episode Counts:
+- BibleProject: 2838 episodes
+- Castleview Baptist Church: 148 episodes
+- Faith Baptist Church: 600 episodes
+- Focus on the Family: 100 episodes
+- Liberty Baptist Church: 600 episodes
+- Pensacola Christian College: 600 episodes
+- Southern Hills LV Church: 642 episodes
+- The Biblical Worldview Show: 600 episodes
+- The Elizabeth Elliot Podcast: 792 episodes
+
+- Confirmed all audio URLs stream/play in browser
+- Confirmed safe_cleanup.py works with backup and .csv logging
+- Confirmed /cleanup-log route renders log via Flask template
+
+======================
+🖼 SCREENSHOTS CAPTURED
+======================
+- home.png              → Homepage with podcast cards
+- search.png            → Search results for keyword like "faith"
+- episode_list.png      → Episode listing view for a selected podcast
+- admin_panel.png       → Admin tools interface
+- rss_import.png        → RSS import success confirmation page
+- cleanup_log.png       → Cleanup log viewer (CSV-based)
+- sqlite_view.png       → Podcast table shown in DB Browser for SQLite
+
+All images saved to: static/img/
+Included in README.md for portfolio/demo purposes.
+
+=== Image Fix Progress - June 22, 2025 ===
+
+✅ All podcast images are now showing correctly.
+
+Updated image_url fields in the Podcast table:
+- BibleProject → bibleproject.png
+- Faith Baptist Church → faith-baptist.png
+- Focus on the Family → focus-on-the-family.png
+- Liberty Baptist Church → liberty-baptist.png
+- Pensacola Christian College → pensacola-christian-college.png
+- Castleview Baptist Church → castleview-baptist-church.png
+- Southern Hills LV Church → southern-hills-lv.png
+- The Biblical Worldview Show → biblical-worldview.png
+- The Elisabeth Elliot Podcast → elisabeth-elliot.png
+
+Verified image paths rendered using:
+<small>{{ url_for('static', filename='img/' + podcast['image_url']) }}</small>

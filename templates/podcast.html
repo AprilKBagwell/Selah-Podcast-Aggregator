@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ podcast_title }}</title>
+</head>
+<body>
+    <h1>{{ podcast_title }}</h1>
+
+    {% if episodes %}
+        <ul>
+        {% for episode in episodes %}
+            <li>
+                <strong>{{ episode['title'] }}</strong><br>
+                <audio controls>
+                    <source src="{{ episode['audio_url'] }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No episodes available for this podcast.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>

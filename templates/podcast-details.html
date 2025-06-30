@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>{{ podcast['name'] }}</h2>
+
+<div class="episode-list">
+    {% for episode in episodes %}
+    <div class="episode-card">
+        <div class="episode-content">
+            <div class="episode-meta">
+                <h3>{{ episode['title'] }}</h3>
+                <p>{{ episode['pub_date'] }}</p>
+            </div>
+            <audio controls>
+                <source src="{{ episode['audio_url'] }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

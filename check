@@ -1,0 +1,38 @@
+import psycopg2
+import feedparser
+
+def add_rss_url(podcast_url):
+    try:
+        # Connect to PostgreSQL
+        conn = psycopg2.connect(
+            dbname="selah_db",
+            user="your_username",
+            password="your_password",
+            host="localhost"
+        )
+        cursor = conn.cursor()
+
+        # Validate RSS feed
+        feed = feedparser.parse(podcast_url)
+        if feed.bozo:
+            print(f"Invalid RSS feed: {podcast_url}")
+            return
+
+        # Insert into podcasts table
+        cursor.execute(
+            "INSERT INTO podcasts (rss_url, title) VALUES (%s, %s) ON CONFLICT (rss_url) DO NOTHING",
+            (podcast_url, feed.feed.get('title', 'Unknown'))
+        )
+        conn.commit()
+        print(f"Added {podcast_url} to database")
+
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+
+if __name__ == "__main__":
+    rss_url = input("Enter podcast RSS URL: ")
+    add_rss_url(rss_url)
+    

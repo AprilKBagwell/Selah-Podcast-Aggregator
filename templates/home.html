@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="search-bar">
+    <form method="get" action="/">
+        <input type="text" name="q" placeholder="Search podcasts..." value="{{ request.args.get('q', '') }}">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+</div>
+
+<div class="podcast-grid">
+    {% for podcast in podcasts %}
+    <div class="podcast-card">
+        <img src="{{ podcast['image_url'] }}" alt="{{ podcast['name'] }}">
+        <h3>{{ podcast['name'] }}</h3>
+        <a href="{{ url_for('podcast_details', podcast_id=podcast['id']) }}">View Episodes</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

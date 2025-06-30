@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<form method="get" action="{{ url_for('admin') }}" class="admin-search-form">
+    <input type="text" name="q" value="{{ search_query }}" placeholder="Search podcasts...">
+    <button type="submit">🔍</button>
+</form>
+
+{% if podcasts %}
+    <ul class="admin-podcast-list">
+        {% for podcast in podcasts %}
+            <li class="admin-podcast-item">
+                <img src="{{ url_for('static', filename=podcast['image_url']) }}"
+                     alt="Podcast cover"
+                     onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default-podcast.png') }}';">
+                <div>
+                    <strong>{{ podcast['name'] }}</strong><br>
+                    <form action="{{ url_for('delete_podcast', podcast_id=podcast['id']) }}" method="post" onsubmit="return confirm('Delete this podcast?');">
+                        <button type="submit">🗑️ Delete</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No podcasts found.</p>
+{% endif %}
+
+{% endblock %}
