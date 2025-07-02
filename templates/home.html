@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="home-container">
+    <form method="get" action="{{ url_for('home') }}" class="search-form">
+        <input type="text" name="q" placeholder="Search podcasts..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="podcast-grid">
+        {% for podcast in podcasts %}
+        <div class="podcast-card">
+            <a href="{{ url_for('podcast_details', podcast_id=podcast.id) }}">
+                <img src="{{ url_for('static', filename='images/' + podcast.name|lower|replace(' ', '-') + '.png') }}" alt="{{ podcast.name }}">
+                <h2>{{ podcast.name }}</h2>
+            </a>
+            <form action="{{ url_for('delete_podcast', podcast_id=podcast.id) }}" method="post" class="delete-form">
+                <button type="submit" onclick="return confirm('Delete this podcast?')">Delete</button>
+            </form>
+        </div>
+        {% else %}
+        <p class="no-results">No podcasts found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

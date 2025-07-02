@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selah – Peace in Every Play</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/selah-logo.png') }}">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/selah-logo.png') }}" alt="Selah Logo">
+            <div class="tagline">
+                <h1>SELAH</h1>
+                <p>Peace in Every Play</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}
+        <!-- Page-specific content will be injected here -->
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; {{ current_year }} Selah. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

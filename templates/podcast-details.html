@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="podcast-detail-container">
+    <div class="podcast-header">
+        <img src="{{ url_for('static', filename='images/thumbnails/' + podcast.name|lower|replace(' ', '_') + '.png') }}" alt="{{ podcast.name }}">
+        <h2>{{ podcast.name }}</h2>
+    </div>
+
+    <div class="episode-list">
+        {% for episode in episodes %}
+        <div class="episode-card">
+            <img src="{{ episode.image_url or url_for('static', filename='images/default-episode.png') }}" alt="Episode image">
+            <div class="episode-info">
+                <h3>{{ episode.title }}</h3>
+                <p>{{ episode.pub_date }}</p>
+                <p>{{ episode.description[:200] }}{% if episode.description|length > 200 %}...{% endif %}</p>
+                <audio controls>
+                    <source src="{{ episode.audio_url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        {% else %}
+        <p>No episodes found for this podcast.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
